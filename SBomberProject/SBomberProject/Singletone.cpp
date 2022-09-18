@@ -11,12 +11,12 @@
 #include <chrono>
 
 
-void __fastcall Singletone::OpenLogFile(const std::string& FN)
+void __fastcall FileLoggerSingletone::OpenLogFile(const std::string& FN)
 {
     logOut.open(FN, std::ios_base::out);
 }
 
-void Singletone::CloseLogFile()
+void FileLoggerSingletone::CloseLogFile()
 {
     if (logOut.is_open())
     {
@@ -24,7 +24,7 @@ void Singletone::CloseLogFile()
     }
 }
 
-void __fastcall  Singletone::WriteToLog(const std::string& str)
+void __fastcall  FileLoggerSingletone::WriteToLog(const std::string& str)
 {
     if (logOut.is_open())
     {
@@ -32,7 +32,7 @@ void __fastcall  Singletone::WriteToLog(const std::string& str)
     }
 }
 
-void __fastcall  Singletone::WriteToLog(const std::string& str, int n)
+void __fastcall  FileLoggerSingletone::WriteToLog(const std::string& str, int n)
 {
     if (logOut.is_open())
     {
@@ -40,7 +40,7 @@ void __fastcall  Singletone::WriteToLog(const std::string& str, int n)
     }
 }
 
-void __fastcall  Singletone::WriteToLog(const std::string& str, double d)
+void __fastcall  FileLoggerSingletone::WriteToLog(const std::string& str, double d)
 {
     if (logOut.is_open())
     {
@@ -48,7 +48,7 @@ void __fastcall  Singletone::WriteToLog(const std::string& str, double d)
     }
 }
 
-std::string Singletone::GetCurDateTime()
+std::string FileLoggerSingletone::GetCurDateTime()
 {
     auto cur = std::chrono::system_clock::now();
     time_t time = std::chrono::system_clock::to_time_t(cur);

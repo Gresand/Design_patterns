@@ -4,12 +4,12 @@
 #include <stdint.h>
 #include <fstream>
 
-class Singletone
+class FileLoggerSingletone
 {
 public:
-	static Singletone& GetInstance()
+	static FileLoggerSingletone& GetInstance()
 	{
-		static Singletone instance;
+		static FileLoggerSingletone instance;
 		return instance;
 	}
 
@@ -20,9 +20,9 @@ public:
 	void __fastcall WriteToLog(const std::string& str, double d);
 	std::string GetCurDateTime();
 private:
-	Singletone() {};
-	Singletone(const Singletone& obj) = delete;
-	Singletone& operator = (const Singletone& obj) = delete;
+	FileLoggerSingletone() {};
+	FileLoggerSingletone(const FileLoggerSingletone& obj) = delete;
+	FileLoggerSingletone& operator = (const FileLoggerSingletone& obj) = delete;
 	std::ofstream logOut;
 };
 
