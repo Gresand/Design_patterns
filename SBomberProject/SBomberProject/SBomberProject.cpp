@@ -4,6 +4,7 @@
 
 #include "SBomber.h"
 #include "MyTools.h"
+#include "Singletone.h"
 
 using namespace std;
 
@@ -11,7 +12,7 @@ using namespace std;
 
 int main(void)
 {
-    MyTools::OpenLogFile("log.txt");
+    FileLoggerSingletone::GetInstance().OpenLogFile("log.txt");
 
     SBomber game;
 
@@ -34,7 +35,7 @@ int main(void)
 
     } while (!game.GetExitFlag());
 
-    MyTools::CloseLogFile();
+    FileLoggerSingletone::GetInstance().CloseLogFile();
 
     return 0;
 }
