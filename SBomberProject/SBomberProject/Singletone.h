@@ -15,11 +15,11 @@ public:
 		return instance;
 	}
 
-	void __fastcall OpenLogFile(const std::string& FN) override;
-	void CloseLogFile() override;
-	void __fastcall WriteToLog(const std::string& str) override;
-	void __fastcall WriteToLog(const std::string& str, int n) override;
-	void __fastcall WriteToLog(const std::string& str, double d) override;
+	void __fastcall OpenLogFile(const std::string& FN);
+	void CloseLogFile();
+	void __fastcall WriteToLog(const std::string& str);
+	void __fastcall WriteToLog(const std::string& str, int n);
+	void __fastcall WriteToLog(const std::string& str, double d);
 	std::string GetCurDateTime();
 private:
 	FileLoggerSingletone() {};

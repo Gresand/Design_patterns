@@ -25,17 +25,20 @@ public:
 
  Переопределил методы:
 
-* `void __fastcall OpenLogFile(const std::string& FN) override;`
-* `void CloseLogFile() override;`
-* `void __fastcall WriteToLog(const std::string& str) override;`
-* `void __fastcall WriteToLog(const std::string& str, int n) override;`
-* `void __fastcall WriteToLog(const std::string& str, double d) override;` 
+*	`void __fastcall OpenLogFile(const std::string& FN);`
+*	`void CloseLogFile();`
+*	`void __fastcall WriteToLog(const std::string& str);`
+*	`void __fastcall WriteToLog(const std::string& str, int n);`
+*	`void __fastcall WriteToLog(const std::string& str, double d);`
 ---
 ### Использование в программе
-В программе главное измнение в файле `SBomber`:  
+В программе главное измнение в файле `SBomber`, в классе в секции `private` создали указатель на объект класса `ProxyTime` 
+> `AbstractSingletone* abstractSingletone = &ProxyTime::GetInstance().GetInstance();`  
+
+Далее меняем методы логирования: 
 ```
 //FileLoggerSingletone::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked");
-ProxyTime::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked");
+abstractSingletone->WriteToLog(string(__FUNCTION__) + " was invoked");
 ```
 
 Нарочно закомментирован участок кода, чтобы выделить разницу между реализацией singletone и  proxy  
