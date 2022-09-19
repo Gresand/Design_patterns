@@ -4,7 +4,9 @@
 #include <stdint.h>
 #include <fstream>
 
-class FileLoggerSingletone
+#include "AbstractSingletone.h"
+
+class FileLoggerSingletone : public AbstractSingletone
 {
 public:
 	static FileLoggerSingletone& GetInstance()

@@ -1,111 +1,56 @@
 # Design_patterns
 
 GOF Design Patterns  
-Add a brnach singletone
+Add a brnach proxy
 
-## Комментарии по выполнению домашнего задания
+## Реализация паттерна proxy
 ---
-Для реализации паттерна Singletone рефакторил функции:  
-* `void __fastcall OpenLogFile(const std::string& FN);`  
-* `void CloseLogFile();`  
-* `void __fastcall WriteToLog(const std::string& str);`
-* `void __fastcall WriteToLog(const std::string& str, int n);`
-* `void __fastcall WriteToLog(const std::string& str, double d);`
-
-Заголовочный файл выглядит так:  
-
+Для реализации паттера proxy добавил абстрактный класс `AbstractSingletone.h`
 ```
-class Singletone
+class AbstractSingletone
 {
 public:
-    static Singletone& GetInstance()
-    {
-        static Singletone instance;
-        return instance;
-    }
-
-    void __fastcall OpenLogFile(const std::string& FN);
-    void CloseLogFile();
-    void __fastcall WriteToLog(const std::string& str);
-    void __fastcall WriteToLog(const std::string& str, int n);
-    void __fastcall WriteToLog(const std::string& str, double d);
-    std::string GetCurDateTime();
-
-private:
-    Singletone() {};
-    Singletone(const Singletone& obj) = delete;
-    Singletone& operator = (const Singletone& obj) = delete;
-    std::ofstream logOut;
+	virtual void __fastcall OpenLogFile(const std::string& FN) = 0;
+	virtual void CloseLogFile() = 0;
+	virtual void __fastcall WriteToLog(const std::string& str) = 0;
+	virtual void __fastcall WriteToLog(const std::string& str, int n) = 0;
+	virtual void __fastcall WriteToLog(const std::string& str, double d) = 0;
 };
 ```
+Изменил метод `GetCurDateTime()` и реализовал его в классе `ProxyTime`, унаследовал от абстрактного класса:  
+
+ * `Singletone.h`
+ * `Proxy.h`
+ * `ProxyTime.h`
+
+ Переопределил методы:
+
+*	`void __fastcall OpenLogFile(const std::string& FN);`
+*	`void CloseLogFile();`
+*	`void __fastcall WriteToLog(const std::string& str);`
+*	`void __fastcall WriteToLog(const std::string& str, int n);`
+*	`void __fastcall WriteToLog(const std::string& str, double d);`
 ---
-### Переписал файл главной функции приложения: 
+### Использование в программе
+В программе главное измнение в файле `SBomber`, в классе в секции `private` создали указатель на объект класса `ProxyTime` 
+> `AbstractSingletone* abstractSingletone = &ProxyTime::GetInstance().GetInstance();`  
 
+Далее меняем методы логирования: 
 ```
-int main(void)
-{
-    Singletone::GetInstance().OpenLogFile("log.txt");
-
-    SBomber game;
-
-    do {
-        game.TimeStart();
-
-        if (_kbhit())
-        {
-            game.ProcessKBHit();
-        }
-
-        MyTools::ClrScr();
-
-        game.DrawFrame();
-        game.MoveObjects();
-        game.CheckObjects();
-        Sleep(30);
-        
-        game.TimeFinish();
-
-    } while (!game.GetExitFlag());
-
-    Singletone::GetInstance().CloseLogFile();
-
-    return 0;
-}
+//FileLoggerSingletone::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked");
+abstractSingletone->WriteToLog(string(__FUNCTION__) + " was invoked");
 ```
-Заменил методы  
-Исходный    |  Singletone
--|:-
-`MyTools::OpenLogFile("log.txt");` | `Singletone::GetInstance().OpenLogFile("log.txt");`
-`MyTools::CloseLogFile();` | `Singletone::GetInstance().CloseLogFile();` 
-  
 
->Основной вопрос заключается в использовании метода `WriteToLog(...)`, так как этот метод используется в файле SBomber.cpp, вот один из методов из файла SBomber.cpp:  
+Нарочно закомментирован участок кода, чтобы выделить разницу между реализацией singletone и  proxy  
 
+Такой получается вывод в лог:
 ```
-void SBomber::DrawFrame()
-{
-    Singletone::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked");
-
-    for (size_t i = 0; i < vecDynamicObj.size(); i++)
-    {
-        if (vecDynamicObj[i] != nullptr)
-        {
-            vecDynamicObj[i]->Draw();
-        }
-    }
-
-    for (size_t i = 0; i < vecStaticObj.size(); i++)
-    {
-        if (vecStaticObj[i] != nullptr)
-        {
-            vecStaticObj[i]->Draw();
-        }
-    }
-
-    GotoXY(0, 0);
-    fps++;
-
-    FindLevelGUI()->SetParam(passedTime, fps, bombsNumber, score);
-}
-```
-Правильно ли я реализую паттерн?
+1	Mon Sep 19 02:14:33 2022 - SBomber::SBomber was invoked
+2	Mon Sep 19 02:14:33 2022 - SBomber::TimeStart was invoked
+3	Mon Sep 19 02:14:33 2022 - SBomber::DrawFrame was invoked
+...
+130	Mon Sep 19 02:14:35 2022 - SBomber::CheckObjects was invoked
+131	Mon Sep 19 02:14:35 2022 - SBomber::TimeFinish deltaTime = 62
+...
+```  
+В результате выполнения реализации паттерна получили вывод в каждой строке нумерацию логируемного события.

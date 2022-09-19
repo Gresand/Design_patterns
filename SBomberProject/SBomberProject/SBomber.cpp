@@ -9,7 +9,8 @@
 #include "Tank.h"
 #include "House.h"
 #include "Singletone.h"
-
+#include "AbstractSingletone.h"
+#include "ProxyTime.h"
 using namespace std;
 using namespace MyTools;
 
@@ -23,8 +24,9 @@ SBomber::SBomber()
     bombsNumber(10),
     score(0)
 {
-    FileLoggerSingletone::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked");
-
+//    FileLoggerSingletone::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked");
+    //ProxyTime::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked");
+    abstractSingletone->WriteToLog(string(__FUNCTION__) + " was invoked");
     Plane* p = new Plane;
     p->SetDirection(1, 0.1);
     p->SetSpeed(4);
@@ -95,8 +97,8 @@ SBomber::~SBomber()
 
 void SBomber::MoveObjects()
 {
-    FileLoggerSingletone::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked");
-
+    //FileLoggerSingletone::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked");
+    abstractSingletone->WriteToLog(string(__FUNCTION__) + " was invoked");
     for (size_t i = 0; i < vecDynamicObj.size(); i++)
     {
         if (vecDynamicObj[i] != nullptr)
@@ -108,8 +110,8 @@ void SBomber::MoveObjects()
 
 void SBomber::CheckObjects()
 {
-    FileLoggerSingletone::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked");
-
+//    FileLoggerSingletone::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked");
+    abstractSingletone->WriteToLog(string(__FUNCTION__) + " was invoked");
     CheckPlaneAndLevelGUI();
     CheckBombsAndGround();
 };
@@ -276,8 +278,8 @@ void SBomber::ProcessKBHit()
         c = _getch();
     }
 
-    FileLoggerSingletone::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked. key = ", c);
-
+//    FileLoggerSingletone::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked. key = ", c);
+    abstractSingletone->WriteToLog(string(__FUNCTION__) + " was invoked");
     switch (c) {
 
     case 27: // esc
@@ -307,8 +309,8 @@ void SBomber::ProcessKBHit()
 
 void SBomber::DrawFrame()
 {
-    FileLoggerSingletone::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked");
-
+//    FileLoggerSingletone::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked");
+    abstractSingletone->WriteToLog(string(__FUNCTION__) + " was invoked");
     for (size_t i = 0; i < vecDynamicObj.size(); i++)
     {
         if (vecDynamicObj[i] != nullptr)
@@ -333,7 +335,8 @@ void SBomber::DrawFrame()
 
 void SBomber::TimeStart()
 {
-    FileLoggerSingletone::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked");
+//    FileLoggerSingletone::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked");
+    abstractSingletone->WriteToLog(string(__FUNCTION__) + " was invoked");
     startTime = GetTickCount64();
 }
 
@@ -343,15 +346,16 @@ void SBomber::TimeFinish()
     deltaTime = uint16_t(finishTime - startTime);
     passedTime += deltaTime;
 
-    FileLoggerSingletone::GetInstance().WriteToLog(string(__FUNCTION__) + " deltaTime = ", (int)deltaTime);
+//    FileLoggerSingletone::GetInstance().WriteToLog(string(__FUNCTION__) + " deltaTime = ", (int)deltaTime);
+    abstractSingletone->WriteToLog(string(__FUNCTION__) + " deltaTime = ", (int)deltaTime);
 }
 
 void SBomber::DropBomb()
 {
     if (bombsNumber > 0)
     {
-        FileLoggerSingletone::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked");
-
+ //       FileLoggerSingletone::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked");
+        abstractSingletone->WriteToLog(string(__FUNCTION__) + " deltaTime = ", (int)deltaTime);
         Plane* pPlane = FindPlane();
         double x = pPlane->GetX() + 4;
         double y = pPlane->GetY() + 2;

@@ -11,7 +11,7 @@
 #include <chrono>
 
 
-void __fastcall FileLoggerSingletone::OpenLogFile(const std::string& FN)
+void __fastcall FileLoggerSingletone::OpenLogFile(const std::string& FN) 
 {
     logOut.open(FN, std::ios_base::out);
 }
@@ -28,7 +28,7 @@ void __fastcall  FileLoggerSingletone::WriteToLog(const std::string& str)
 {
     if (logOut.is_open())
     {
-        logOut << GetCurDateTime() << " - " << str << std::endl;
+        logOut  << str << std::endl;
     }
 }
 
@@ -36,7 +36,7 @@ void __fastcall  FileLoggerSingletone::WriteToLog(const std::string& str, int n)
 {
     if (logOut.is_open())
     {
-        logOut << GetCurDateTime() << " - " << str << n << std::endl;
+        logOut  << str << n << std::endl;
     }
 }
 
@@ -44,16 +44,6 @@ void __fastcall  FileLoggerSingletone::WriteToLog(const std::string& str, double
 {
     if (logOut.is_open())
     {
-        logOut << GetCurDateTime() << " - " << str << d << std::endl;
+        logOut <<  str << d << std::endl;
     }
-}
-
-std::string FileLoggerSingletone::GetCurDateTime()
-{
-    auto cur = std::chrono::system_clock::now();
-    time_t time = std::chrono::system_clock::to_time_t(cur);
-    char buf[64] = { 0 };
-    ctime_s(buf, 64, &time);
-    buf[strlen(buf) - 1] = '\0';
-    return std::string(buf);
 }
