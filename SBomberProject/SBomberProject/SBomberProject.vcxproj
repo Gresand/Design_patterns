@@ -139,7 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AbstractCommand.cpp" />
     <ClCompile Include="Bomb.cpp" />
+    <ClCompile Include="CommandDeleteDynamicObj.cpp" />
+    <ClCompile Include="CommandDeleteStaticObj.cpp" />
+    <ClCompile Include="CommandDropBomb.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="House.cpp" />
     <ClCompile Include="LevelGUI.cpp" />
@@ -151,7 +155,11 @@
     <ClCompile Include="Tank.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractCommand.h" />
     <ClInclude Include="Bomb.h" />
+    <ClInclude Include="CommandDeleteDynamicObj.h" />
+    <ClInclude Include="CommandDeleteStaticObj.h" />
+    <ClInclude Include="CommandDropBomb.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="DynamicObject.h" />
     <ClInclude Include="Ground.h" />
