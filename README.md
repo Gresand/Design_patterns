@@ -1,111 +1,58 @@
 # Design_patterns
 
 GOF Design Patterns  
-Add a brnach singletone
+Add a brnach command
 
-## Комментарии по выполнению домашнего задания
 ---
-Для реализации паттерна Singletone рефакторил функции:  
-* `void __fastcall OpenLogFile(const std::string& FN);`  
-* `void CloseLogFile();`  
-* `void __fastcall WriteToLog(const std::string& str);`
-* `void __fastcall WriteToLog(const std::string& str, int n);`
-* `void __fastcall WriteToLog(const std::string& str, double d);`
-
-Заголовочный файл выглядит так:  
-
+## Паттерн Command
+---
+Реализовал паттерн Command, для этого создал абстрактный класс `AbstractCommand`:
 ```
-class Singletone
+class AbstractCommand
 {
 public:
-    static Singletone& GetInstance()
-    {
-        static Singletone instance;
-        return instance;
-    }
 
-    void __fastcall OpenLogFile(const std::string& FN);
-    void CloseLogFile();
-    void __fastcall WriteToLog(const std::string& str);
-    void __fastcall WriteToLog(const std::string& str, int n);
-    void __fastcall WriteToLog(const std::string& str, double d);
-    std::string GetCurDateTime();
+	virtual ~AbstractCommand() {};
+	virtual void Execute() = 0;
 
-private:
-    Singletone() {};
-    Singletone(const Singletone& obj) = delete;
-    Singletone& operator = (const Singletone& obj) = delete;
-    std::ofstream logOut;
+protected:
+
+	AbstractCommand() {};
 };
 ```
----
-### Переписал файл главной функции приложения: 
+ и унаследовал три дочерних команды:
+ * `CommandDeleteDynamicObj`
+ * `CommandDeleteStaticObj`
+ * `CommandDropBomb`  
 
+В дочерних классах переопределил метод `Execute()`, чтобы они соответствовали тому что было написано в классе `SBomber`, удалил методы из класса `SBomber`, такие как `SBomber::DeleteDynamicObj()`, `SBomber::DeleteStaticObj()` и `SBomber::DropBomb()`, добавил в заголовок `SBomber.h` указатель `AbstractCommand* pCommand` и в тех местах где вызывались методы класса 
+`SBomber` использовал следующие конструкции:  
+* Для удаления динамических объектов.
+ ```
+pCommand = new CommandDeleteDynamicObj(vecBombs[i], vecDynamicObj);
+pCommand->Execute();
+delete pCommand;
 ```
-int main(void)
-{
-    Singletone::GetInstance().OpenLogFile("log.txt");
-
-    SBomber game;
-
-    do {
-        game.TimeStart();
-
-        if (_kbhit())
-        {
-            game.ProcessKBHit();
-        }
-
-        MyTools::ClrScr();
-
-        game.DrawFrame();
-        game.MoveObjects();
-        game.CheckObjects();
-        Sleep(30);
-        
-        game.TimeFinish();
-
-    } while (!game.GetExitFlag());
-
-    Singletone::GetInstance().CloseLogFile();
-
-    return 0;
-}
+* Для удаления статических объектов.
 ```
-Заменил методы  
-Исходный    |  Singletone
--|:-
-`MyTools::OpenLogFile("log.txt");` | `Singletone::GetInstance().OpenLogFile("log.txt");`
-`MyTools::CloseLogFile();` | `Singletone::GetInstance().CloseLogFile();` 
-  
-
->Основной вопрос заключается в использовании метода `WriteToLog(...)`, так как этот метод используется в файле SBomber.cpp, вот один из методов из файла SBomber.cpp:  
-
+pCommand = new CommandDeleteStaticObj(vecDestoyableObjects[i], vecStaticObj);
+pCommand->Execute();   
+delete pCommand;
 ```
-void SBomber::DrawFrame()
-{
-    Singletone::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked");
-
-    for (size_t i = 0; i < vecDynamicObj.size(); i++)
-    {
-        if (vecDynamicObj[i] != nullptr)
-        {
-            vecDynamicObj[i]->Draw();
-        }
-    }
-
-    for (size_t i = 0; i < vecStaticObj.size(); i++)
-    {
-        if (vecStaticObj[i] != nullptr)
-        {
-            vecStaticObj[i]->Draw();
-        }
-    }
-
-    GotoXY(0, 0);
-    fps++;
-
-    FindLevelGUI()->SetParam(passedTime, fps, bombsNumber, score);
-}
+* Для метода сброса бомбы.
 ```
-Правильно ли я реализую паттерн?
+case 'b':
+    pCommand = new CommandDropBomb(FindPlane(), vecDynamicObj, bombsNumber, score);
+    pCommand->Execute();
+    delete pCommand;
+    break;
+
+case 'B':
+    pCommand = new CommandDropBomb(FindPlane(), vecDynamicObj, bombsNumber, score);
+    pCommand->Execute();
+    delete pCommand;
+    break;
+```
+Задание сделано не до конца, методы отрабатывают, но с ошибками, а именно:
+1. В методах удаления не правильно передаю аргументы из-за чего программа аварийно завершается когда бомба пересекает землю.
+2. Количество бомб после сброса не изменяется, хотя передаю их по ссылке.
