@@ -139,7 +139,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Bomb.cpp" />
+    <ClCompile Include="BombDecorator.cpp" />
+    <ClCompile Include="BombReal.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="House.cpp" />
     <ClCompile Include="LevelGUI.cpp" />
@@ -152,6 +153,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bomb.h" />
+    <ClInclude Include="BombDecorator.h" />
+    <ClInclude Include="BombReal.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="DynamicObject.h" />
     <ClInclude Include="Ground.h" />

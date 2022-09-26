@@ -9,6 +9,7 @@
 #include "Tank.h"
 #include "House.h"
 #include "Singletone.h"
+#include "BombDecorator.h"
 
 using namespace std;
 using namespace MyTools;
@@ -356,7 +357,7 @@ void SBomber::DropBomb()
         double x = pPlane->GetX() + 4;
         double y = pPlane->GetY() + 2;
 
-        Bomb* pBomb = new Bomb;
+        DynamicObject* pBomb = new BombDecorator;
         pBomb->SetDirection(0.3, 1);
         pBomb->SetSpeed(2);
         pBomb->SetPos(x, y);
