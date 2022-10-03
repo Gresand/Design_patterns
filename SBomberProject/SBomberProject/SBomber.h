@@ -7,6 +7,7 @@
 #include "Bomb.h"
 #include "Ground.h"
 #include "Tank.h"
+#include "CollisionDetector.h"
 
 class SBomber
 {
@@ -27,12 +28,14 @@ public:
 
 private:
 
-    void CheckPlaneAndLevelGUI();
-    void CheckBombsAndGround();
-    void __fastcall CheckDestoyableObjects(Bomb* pBomb);
+    CollisionDetector chDetect;
+    void CheckCollisions();
+    // void CheckPlaneAndLevelGUI();
+    // void CheckBombsAndGround();
+    // void __fastcall CheckDestoyableObjects(Bomb* pBomb);
 
-    void __fastcall DeleteDynamicObj(DynamicObject * pBomb);
-    void __fastcall DeleteStaticObj(GameObject* pObj);
+    // void __fastcall DeleteDynamicObj(DynamicObject * pBomb);
+    // void __fastcall DeleteStaticObj(GameObject* pObj);
 
     Ground * FindGround() const;
     Plane * FindPlane() const;

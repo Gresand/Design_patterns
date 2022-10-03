@@ -4,6 +4,13 @@
 #include "House.h"
 #include "MyTools.h"
 
+#include "Director.h"
+#include "HouseBlocks.h"
+#include "HouseBuilder.h"
+#include "ModernHouseBuilder.h"
+#include "DefaultHouseBuilder.h"
+#include "Singletone.h"
+
 using namespace std;
 using namespace MyTools;
 
@@ -32,17 +39,30 @@ bool House::isInside(double x1, double x2) const
 
 void House::Draw() const
 {
+	Director dir;
+
+	// DefaultHouseBuilder dh_buider;
+	ModernHouseBuilder mh_buider;
+	// HouseBlocks *dh = dir.createHouse(dh_buider);
+	HouseBlocks* mh = dir.createHouse(mh_buider);
+
 	MyTools::SetColor(CC_Yellow);
-	GotoXY(x, y - 5);
+	MyTools::GotoXY(x, y - 5);
 	cout << "  ########  ";
-	GotoXY(x, y - 4);
+	cout << mh->getHouse()->at(0);
+	MyTools::GotoXY(x, y - 4);
 	cout << "##        ##";
-	GotoXY(x, y - 3);
+	cout << mh->getHouse()->at(1);
+	MyTools::GotoXY(x, y - 3);
 	cout << "############";
-	GotoXY(x, y - 2);
+	cout << mh->getHouse()->at(2);
+	MyTools::GotoXY(x, y - 2);
 	cout << "#          #";
-	GotoXY(x, y - 1);
+	cout << mh->getHouse()->at(3);
+	MyTools::GotoXY(x, y - 1);
 	cout << "#          #";
-	GotoXY(x, y);
+	cout << mh->getHouse()->at(4);
+	MyTools::GotoXY(x, y);
 	cout << "############";
+	cout << mh->getHouse()->at(5);
 }

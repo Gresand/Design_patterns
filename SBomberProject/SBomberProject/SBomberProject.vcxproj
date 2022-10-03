@@ -140,9 +140,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bomb.cpp" />
+    <ClCompile Include="CollisionImplementorA.cpp" />
+    <ClCompile Include="DefaultHouseBuilder.cpp" />
+    <ClCompile Include="Director.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="House.cpp" />
+    <ClCompile Include="HouseBlocks.cpp" />
     <ClCompile Include="LevelGUI.cpp" />
+    <ClCompile Include="ModernHouseBuilder.cpp" />
     <ClCompile Include="MyTools.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="SBomber.cpp" />
@@ -152,12 +157,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bomb.h" />
+    <ClInclude Include="CollisionDetector.h" />
+    <ClInclude Include="CollisionImplementor.h" />
+    <ClInclude Include="CollisionImplementorA.h" />
+    <ClInclude Include="DefaultHouseBuilder.h" />
+    <ClInclude Include="Director.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="DynamicObject.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="DestroyableGroundObject.h" />
     <ClInclude Include="House.h" />
+    <ClInclude Include="HouseBlocks.h" />
+    <ClInclude Include="HouseBuilder.h" />
     <ClInclude Include="LevelGUI.h" />
+    <ClInclude Include="ModernHouseBuilder.h" />
     <ClInclude Include="MyTools.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="SBomber.h" />
