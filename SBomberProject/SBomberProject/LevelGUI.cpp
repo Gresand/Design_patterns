@@ -32,6 +32,12 @@ void LevelGUI::Draw() const
         cout << "+";
     }
 
+    if (!duration)
+    {
+        MyTools::GotoXY(5, height + 2);
+        cout << m->TakeFromTheQueue();
+    }
+
     GotoXY(3, 1);
     cout << "FramePerSecond: " << static_cast<int>(fps / (passedTime / 1000.0));
     GotoXY(25, 1);
@@ -45,7 +51,18 @@ void LevelGUI::Draw() const
 void __fastcall LevelGUI::SetParam(uint64_t passedTimeNew, uint64_t fpsNew, uint16_t bombsNumberNew, int16_t scoreNew)
 {
     passedTime = passedTimeNew;
+    duration += passedTimeNew;
+    if (duration > 2500)
+    {
+        duration = 0;
+    }
     fps = fpsNew;
     bombsNumber = bombsNumberNew;
     score = scoreNew;
+}
+
+void LevelGUI::SetMediator(Mediator* pMed)
+{
+    m = pMed;
+    m->SetQueue(this->GetQueue());
 }

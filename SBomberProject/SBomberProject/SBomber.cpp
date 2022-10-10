@@ -13,6 +13,8 @@
 using namespace std;
 using namespace MyTools;
 
+class Mediator;
+
 SBomber::SBomber()
     : exitFlag(false),
     startTime(0),
@@ -32,6 +34,9 @@ SBomber::SBomber()
     vecDynamicObj.push_back(p);
 
     LevelGUI* pGUI = new LevelGUI;
+    pGUI->m = new Mediator;
+    pGUI->SetMediator(pGUI->m);
+    pGUI->m->SetQueue(pGUI->GetQueue());
     pGUI->SetParam(passedTime, fps, bombsNumber, score);
     const uint16_t maxX = GetMaxX();
     const uint16_t maxY = GetMaxY(); 
@@ -49,12 +54,12 @@ SBomber::SBomber()
     pGr->SetWidth(width - 2);
     vecStaticObj.push_back(pGr);
 
-    Tank* pTank = new Tank;
+    Tank* pTank = new Tank(pGUI->m);
     pTank->SetWidth(13);
     pTank->SetPos(30, groundY - 1);
     vecStaticObj.push_back(pTank);
 
-    pTank = new Tank;
+    pTank = new Tank(pGUI->m);
     pTank->SetWidth(13);
     pTank->SetPos(50, groundY - 1);
     vecStaticObj.push_back(pTank);
