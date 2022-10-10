@@ -9,6 +9,8 @@
 #include "Tank.h"
 #include "House.h"
 #include "Singletone.h"
+#include "ColorPlane.h"
+#include "BigPlane.h"
 
 using namespace std;
 using namespace MyTools;
@@ -25,7 +27,16 @@ SBomber::SBomber()
 {
     FileLoggerSingletone::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked");
 
-    Plane* p = new Plane;
+    Plane* p = nullptr;
+    std::srand(time(NULL));
+    if (rand() % 2)
+    {
+        p = new ColorPlane;
+    }
+    else
+    {
+        p = new BigPlane;
+    }
     p->SetDirection(1, 0.1);
     p->SetSpeed(4);
     p->SetPos(5, 10);
