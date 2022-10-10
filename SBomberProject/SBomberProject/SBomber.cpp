@@ -80,7 +80,16 @@ SBomber::~SBomber()
     {
         if (vecDynamicObj[i] != nullptr)
         {
-            delete vecDynamicObj[i];
+            vecDynamicObj[i]->Move(deltaTime);
+            if (dynamic_cast<Plane*> (vecDynamicObj[i]) != nullptr)
+            {
+                lv.log(dynamic_cast<Plane*> (vecDynamicObj[i]));
+            }
+            else
+            {
+                lv.log(dynamic_cast<Bomb*> (vecDynamicObj[i]));
+            }
+
         }
     }
 

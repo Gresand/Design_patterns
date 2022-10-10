@@ -13,3 +13,8 @@ void Bomb::Draw() const
     GotoXY(x, y);
     cout << "*";
 }
+
+void __fastcall Bomb::Accept(Visitor& v)
+{
+    v.log(this);
+}
