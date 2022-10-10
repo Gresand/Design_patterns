@@ -41,4 +41,18 @@ void Tank::Draw() const
 	cout << "    #####";
 	GotoXY(x,y);
 	cout << " ###########";
+	SendMenace();
+}
+
+void Tank::SendMenace() const
+{
+	srand((unsigned)time(0));
+	if (rand() % 5)
+	{
+		pMediator->PutInTheQueue(this->strMenace);
+	}
+	else
+	{
+		pMediator->PutInTheQueue(this->strEmpty);
+	}
 }
