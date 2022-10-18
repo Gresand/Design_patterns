@@ -367,3 +367,67 @@ void SBomber::DropBomb()
         score -= Bomb::BombCost;
     }
 }
+
+static const size_t ScrollHeight = 30;
+static const size_t ScrollWidth = 30;
+static const char* ppScroll[ScrollHeight] = { "                              ",
+                                             "                              ",
+                                             "                              ",
+                                             "                              ",
+                                             "                              ",
+                                             "                              ",
+                                             "                              ",
+                                             "                              ",
+                                             "                              ",
+                                             "  Project manager:            ",
+                                             "      Ivan Vasilevich         ",
+                                             "                              ",
+                                             "  Developers:                 ",
+                                             "      Nikolay Gavrilov        ",
+                                             "      Dmitriy Sidelnikov      ",
+                                             "      Eva Brown               ",
+                                             "                              ",
+                                             "  Designers:                  ",
+                                             "      Anna Pachenkova         ",
+                                             "      Elena Shvaiber          ",
+                                             "                              ",
+                                             "                              ",
+                                             "                              ",
+                                             "                              ",
+                                             "                              ",
+                                             "                              ",
+                                             "                              ",
+                                             "                              ",
+                                             "                              ",
+                                             "                              " };
+
+void SBomber::AnimateScrolling()
+{
+    FileLoggerSingletone::GetInstance().WriteToLog(string(__FUNCTION__) + " was invoked");
+    const size_t windowHeight = 10;        // Размер окна дляскроллинга 
+    const size_t startX = MyTools::GetMaxX() / 2 - ScrollWidth / 2;
+    const size_t startY = MyTools::GetMaxY() / 2 - windowHeight / 2;
+    double curPos = 0;
+    do
+    {
+        TimeStart();
+        MyTools::ClrScr();
+
+        // вывод windowHeight строк из ppScroll используясмещение curPos 
+        // ...
+
+        for (int i = 0; i < windowHeight; i++)
+        {
+            if ((i + (int)curPos) > ScrollHeight)
+            {
+                continue;
+            }
+            std::cout << ppScroll[i + (int)curPos] << std::endl;
+        }
+
+        MyTools::GotoXY(0, 0);
+        TimeFinish();
+        curPos += deltaTime * 0.0015;
+    } while (!_kbhit() && int(curPos) <= (ScrollHeight - windowHeight));
+    MyTools::ClrScr();
+}

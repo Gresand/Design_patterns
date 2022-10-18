@@ -36,6 +36,6 @@ int main(void)
     } while (!game.GetExitFlag());
 
     FileLoggerSingletone::GetInstance().CloseLogFile();
-
+    game.AnimateScrolling();
     return 0;
 }
