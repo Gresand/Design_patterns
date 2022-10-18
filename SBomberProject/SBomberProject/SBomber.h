@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <iostream>
 
 #include "LevelGUI.h"
 #include "Plane.h"
@@ -24,6 +25,7 @@ public:
     void DrawFrame();
     void MoveObjects();
     void CheckObjects();
+    void AnimateScrolling();
 
 private:
 
