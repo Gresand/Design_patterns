@@ -40,7 +40,8 @@ private:
     std::vector<DestroyableGroundObject*> FindDestoyableGroundObjects() const;
     std::vector<Bomb*> FindAllBombs() const;
 
-    void DropBomb();
+    void DropBombA();
+    void DropBombB();
 
     std::vector<DynamicObject*> vecDynamicObj;
     std::vector<GameObject*> vecStaticObj;
