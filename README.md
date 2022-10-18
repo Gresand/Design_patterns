@@ -4,5 +4,5 @@ GOF Design Patterns
 Add a brnach prototype
 
 ---
-## Prototype
+## 8.1 Prototype
 ---
